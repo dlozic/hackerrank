@@ -1,0 +1,56 @@
+package algorithms
+
+import (
+	"bufio"
+	"fmt"
+	"os"
+	"strconv"
+	"strings"
+)
+
+/*
+ * Complete the 'simpleArraySum' function below.
+ *
+ * The function is expected to return an INTEGER.
+ * The function accepts INTEGER_ARRAY ar as parameter.
+ */
+
+func simpleArraySum(ar []int32) int32 {
+	// Write your code here
+	var sum int32 = 0
+	for _, value := range ar {
+		sum += value
+	}
+	return sum
+}
+
+func main() {
+	reader := bufio.NewReaderSize(os.Stdin, 16*1024*1024)
+
+	stdout, err := os.Create(os.Getenv("OUTPUT_PATH"))
+	checkError(err)
+
+	defer stdout.Close()
+
+	writer := bufio.NewWriterSize(stdout, 16*1024*1024)
+
+	arCount, err := strconv.ParseInt(strings.TrimSpace(readLine(reader)), 10, 64)
+	checkError(err)
+
+	arTemp := strings.Split(strings.TrimSpace(readLine(reader)), " ")
+
+	var ar []int32
+
+	for i := 0; i < int(arCount); i++ {
+		arItemTemp, err := strconv.ParseInt(arTemp[i], 10, 64)
+		checkError(err)
+		arItem := int32(arItemTemp)
+		ar = append(ar, arItem)
+	}
+
+	result := simpleArraySum(ar)
+
+	fmt.Fprintf(writer, "%d\n", result)
+
+	writer.Flush()
+}
